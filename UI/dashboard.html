@@ -341,7 +341,7 @@
     </main>
 <script>
 (function () {
-    var API = 'http://localhost:5000/api';
+    var API = window.location.origin + '/api';
     var token = localStorage.getItem('shotzoo_token');
     if (!token) return;
     var auth = { 'Authorization': 'Bearer ' + token };

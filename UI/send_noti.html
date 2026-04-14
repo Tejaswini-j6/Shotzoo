@@ -235,7 +235,7 @@
 
 <script>
 (function () {
-    var API = 'http://localhost:5000/api';
+    var API = window.location.origin + '/api';
     var token = localStorage.getItem('shotzoo_token');
     var auth = token ? { 'Authorization': 'Bearer ' + token } : {};
 
@@ -292,7 +292,7 @@
                         id: u._id,
                         name: u.fullName || 'Unnamed',
                         employeeId: u.employeeId || '',
-                        avatar: u.photo ? ('http://localhost:5000' + u.photo) : ''
+                        avatar: u.photo ? (window.location.origin + u.photo) : ''
                     };
                 });
                 // Update the "all employees" info line with real count

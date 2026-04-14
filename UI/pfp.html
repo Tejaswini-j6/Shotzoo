@@ -365,7 +365,7 @@
 
 <script>
 (function () {
-    var API = 'http://localhost:5000/api';
+    var API = window.location.origin + '/api';
     var token = localStorage.getItem('shotzoo_token');
     if (!token) { globalThis.location.href = '/admin'; return; }
     var auth = { 'Authorization': 'Bearer ' + token };
@@ -400,7 +400,7 @@
     function uploadUrl(path) {
         if (!path) return '';
         if (path.indexOf('http') === 0) return path;
-        return 'http://localhost:5000' + path + '?v=' + Date.now();
+        return window.location.origin + path + '?v=' + Date.now();
     }
     function setPhoto(url, name) {
         if (url) {

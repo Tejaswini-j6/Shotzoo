@@ -211,7 +211,7 @@
 
 <script>
 (function () {
-    var API = 'http://localhost:5000/api';
+    var API = window.location.origin + '/api';
     var token = localStorage.getItem('shotzoo_token');
     if (!token) return;
     var auth = { 'Authorization': 'Bearer ' + token };
@@ -277,7 +277,7 @@
         var id = document.getElementById('cred-id').textContent;
         var email = document.getElementById('cred-email').textContent;
         var pass = document.getElementById('cred-pass').textContent;
-        var text = 'ShotZoo Login Credentials\n\nName: ' + name + '\nEmployee ID: ' + id + '\nEmail: ' + email + '\nPassword: ' + pass + '\n\nLogin: http://localhost:5000/signin';
+        var text = 'ShotZoo Login Credentials\n\nName: ' + name + '\nEmployee ID: ' + id + '\nEmail: ' + email + '\nPassword: ' + pass + '\n\nLogin: ' + window.location.origin + '/signin';
         navigator.clipboard.writeText(text).then(function () {
             var btn = document.getElementById('copy-cred-btn');
             btn.innerHTML = '<span class="material-symbols-outlined text-lg">check</span> Copied!';
