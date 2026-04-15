@@ -1,5 +1,77 @@
 const mongoose = require('mongoose');
 
+const seedUsers = [
+  {
+    fullName: 'Arut Selvi',
+    email: 'aruts@shotzoo.com',
+    password: 'shotzoo@2026',
+    role: 'Admin',
+    company: 'Shotzoo',
+    designation: 'Growth Operations and Community Executive',
+    phone: '7550105901',
+    employeeType: 'Office'
+  },
+  {
+    fullName: 'Santhosh',
+    email: 'santhosh@shotzoo.com',
+    password: 'santhosh@shotzoo',
+    role: 'Employee',
+    designation: 'Growth Strategy Manager',
+    phone: '8428273301',
+    employeeType: 'Office'
+  },
+  {
+    fullName: 'Kishore',
+    email: 'kishore@shotzoo.com',
+    password: 'kishore@shotzoo',
+    role: 'Employee',
+    designation: 'Manager',
+    phone: '8939055503',
+    employeeType: 'Office'
+  },
+  {
+    fullName: 'Nivetha',
+    email: 'nivetha@shotzoo.com',
+    password: 'Nivetha@shotzoo',
+    role: 'Employee',
+    designation: 'Performance Marketing',
+    phone: '8248457414',
+    employeeType: 'Office'
+  },
+  {
+    fullName: 'Rameez',
+    email: 'rameez@vfxpick.com',
+    password: 'Rameez@shotzoo',
+    role: 'Employee',
+    designation: 'Production Executive in VFXPICK',
+    phone: '7845947269',
+    employeeType: 'Office'
+  },
+  {
+    fullName: 'Arul and Tejaswini',
+    email: 'inters@shotzoo.com',
+    password: 'inters@shotzoo',
+    role: 'Employee',
+    designation: 'AI & Automation Intern',
+    employeeType: 'Office'
+  }
+];
+
+const seedAdmin = async () => {
+  try {
+    const User = require('../models/User');
+    for (const u of seedUsers) {
+      const exists = await User.findOne({ email: u.email });
+      if (!exists) {
+        await User.create(u);
+        console.log('Seeded user: ' + u.email);
+      }
+    }
+  } catch (e) {
+    console.error('Seed error:', e.message);
+  }
+};
+
 const connectDB = async () => {
   try {
     // Try local MongoDB first
@@ -19,6 +91,7 @@ const connectDB = async () => {
       process.exit(1);
     }
   }
+  await seedAdmin();
 };
 
 module.exports = connectDB;
