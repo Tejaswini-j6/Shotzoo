@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const seedAdmin = async () => {
   try {
     const User = require('../models/User');
-    await User.deleteMany({});
     const adminExists = await User.findOne({ email: 'admin@shotzoo.com' });
     if (!adminExists) {
       await User.create({
