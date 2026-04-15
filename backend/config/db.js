@@ -1,38 +1,5 @@
 const mongoose = require('mongoose');
 
-const seedAdmin = async () => {
-  try {
-    const User = require('../models/User');
-    const adminExists = await User.findOne({ email: 'admin@shotzoo.com' });
-    if (!adminExists) {
-      await User.create({
-        fullName: 'Admin',
-        email: 'admin@shotzoo.com',
-        password: 'shotzoo@2026',
-        confirmPassword: 'shotzoo@2026',
-        role: 'Admin',
-        employeeType: 'Office'
-      });
-      console.log('Admin account seeded: admin@shotzoo.com');
-    }
-    const empExists = await User.findOne({ email: 'testemp@shotzoo.com' });
-    if (!empExists) {
-      await User.create({
-        fullName: 'Test1',
-        email: 'testemp@shotzoo.com',
-        password: 'emp1@2026',
-        confirmPassword: 'emp1@2026',
-        role: 'employee',
-        designation: 'AI and automation',
-        employeeType: 'Office'
-      });
-      console.log('Employee account seeded: testemp@shotzoo.com');
-    }
-  } catch (e) {
-    console.error('Seed error:', e.message);
-  }
-};
-
 const connectDB = async () => {
   try {
     // Try local MongoDB first
@@ -52,7 +19,6 @@ const connectDB = async () => {
       process.exit(1);
     }
   }
-  await seedAdmin();
 };
 
 module.exports = connectDB;
