@@ -1,6 +1,6 @@
 // ShotZoo API Helper
-const API_BASE = 'http://localhost:5000/api';
-const SERVER_BASE = 'http://localhost:5000';
+const API_BASE = window.location.origin + '/api';
+const SERVER_BASE = window.location.origin;
 
 function escapeHtml(str) {
   if (!str) return '';
