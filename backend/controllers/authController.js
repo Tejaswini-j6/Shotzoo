@@ -54,7 +54,7 @@ exports.register = async (req, res) => {
 // Protected — admin creates an employee account, returns credentials (no token issued)
 exports.createEmployee = async (req, res) => {
   try {
-    const { fullName, email, phone, role, employeeType, password } = req.body;
+    const { fullName, email, phone, role, employeeType, password, designation } = req.body;
     if (!fullName || !email || !password) {
       return res.status(400).json({ success: false, message: 'Name, email and password are required.' });
     }
@@ -70,7 +70,8 @@ exports.createEmployee = async (req, res) => {
       phone: phone || '',
       role: role || 'Employee',
       password,
-      employeeType: employeeType || 'Office'
+      employeeType: employeeType || 'Office',
+      designation: designation || ''
     });
     res.status(201).json({
       success: true,
