@@ -49,8 +49,8 @@ const seedUsers = [
   },
   {
     fullName: 'Arul and Tejaswini',
-    email: 'inters@shotzoo.com',
-    password: 'inters@shotzoo',
+    email: 'interns@shotzoo.com',
+    password: 'interns@shotzoo',
     role: 'Employee',
     designation: 'AI & Automation Intern',
     employeeType: 'Office'
