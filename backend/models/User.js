@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String, trim: true, default: '' },
   company: { type: String, trim: true, default: '' },
   role: { type: String, default: 'Employee' },
+  designation: { type: String, default: '', trim: true },
   password: { type: String, required: [true, 'Password is required'], minlength: 6, select: false },
   photo: { type: String, default: '' },
   employeeType: { type: String, enum: ['Office', 'Home'], default: 'Office' },
