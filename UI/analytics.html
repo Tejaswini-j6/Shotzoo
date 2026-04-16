@@ -139,20 +139,24 @@
     if (!token) return;
     var auth = { 'Authorization': 'Bearer ' + token };
     function apiFetch(url) { return fetch(API + url, { headers: auth }).then(function (r) { return r.json(); }); }
+    function showErr(id, msg) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = '<p class="text-sm" style="color:#b91c1c">' + msg + '</p>';
+    }
 
     // Stats
     apiFetch('/admin/stats').then(function (d) {
-        if (!d.success) return;
+        if (!d.success) { console.error('stats failed:', d.message); return; }
         var s = d.stats;
         document.getElementById('stat-employees').textContent = s.totalEmployees || 0;
         document.getElementById('stat-completed').textContent = s.completedToday || 0;
         document.getElementById('stat-open').textContent = s.openTasks || 0;
         document.getElementById('stat-overdue').textContent = s.overdueCount || 0;
-    }).catch(function () {});
+    }).catch(function (err) { console.error('stats error:', err); });
 
     // Task breakdown
     apiFetch('/admin/tasks').then(function (d) {
-        if (!d.success) return;
+        if (!d.success) { showErr('task-breakdown', 'Failed: ' + (d.message || 'unknown error')); return; }
         var tasks = d.tasks || [];
         var counts = { Pending: 0, 'In Progress': 0, Completed: 0, Overdue: 0 };
         tasks.forEach(function (t) { counts[t.status] = (counts[t.status] || 0) + 1; });
@@ -166,11 +170,11 @@
                 '<span class="text-sm font-bold" style="color:' + colors[status] + '">' + counts[status] + ' (' + pct + '%)</span></div>' +
                 '<div class="stat-bar"><div class="stat-bar-fill" style="width:' + pct + '%;background:' + colors[status] + '"></div></div>';
         }).join('');
-    }).catch(function () {});
+    }).catch(function (err) { showErr('task-breakdown', 'Error: ' + (err.message || 'network')); });
 
     // Attendance
     apiFetch('/admin/attendance').then(function (d) {
-        if (!d.success) return;
+        if (!d.success) { showErr('attendance-summary', 'Failed: ' + (d.message || 'unknown error')); return; }
         var el = document.getElementById('attendance-summary');
         var presentPct = d.totalEmployees ? Math.round((d.present / d.totalEmployees) * 100) : 0;
         el.innerHTML =
@@ -180,12 +184,15 @@
             '<div class="bg-[#A8CD62]/10 rounded-lg p-4"><p class="text-2xl font-bold text-primary">' + d.present + '</p><p class="text-xs text-stone-500 mt-1">Present</p></div>' +
             '<div class="bg-error-container/30 rounded-lg p-4"><p class="text-2xl font-bold text-error">' + d.absent + '</p><p class="text-xs text-stone-500 mt-1">Absent</p></div>' +
             '<div class="bg-surface-container rounded-lg p-4"><p class="text-2xl font-bold text-stone-700">' + d.totalEmployees + '</p><p class="text-xs text-stone-500 mt-1">Total</p></div></div>';
-    }).catch(function () {});
+    }).catch(function (err) { showErr('attendance-summary', 'Error: ' + (err.message || 'network')); });
 
     // Employees table
     apiFetch('/admin/employees').then(function (d) {
-        if (!d.success) return;
         var tbody = document.getElementById('emp-tbody');
+        if (!d.success) {
+            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-sm" style="color:#b91c1c">Failed: ' + (d.message || 'unknown error') + '</td></tr>';
+            return;
+        }
         if (!d.employees.length) { tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-stone-400">No employees registered.</td></tr>'; return; }
         tbody.innerHTML = d.employees.map(function (emp) {
             var joined = emp.createdAt ? new Date(emp.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
@@ -199,7 +206,10 @@
                 '<td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary-container/20 text-primary uppercase">' + (emp.employeeType || 'Office') + '</span></td>' +
                 '<td class="px-4 py-3 text-right text-sm text-stone-400">' + joined + '</td></tr>';
         }).join('');
-    }).catch(function () {});
+    }).catch(function (err) {
+        var tbody = document.getElementById('emp-tbody');
+        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-sm" style="color:#b91c1c">Error: ' + (err.message || 'network') + '</td></tr>';
+    });
 })();
 </script>
 <script src="/admin/admin-guard.js"></script>

@@ -512,8 +512,10 @@
             });
 
             renderTeam();
-        }).catch(function () {
-            document.getElementById('team-tbody').innerHTML = '<tr><td colspan="6" class="px-6 py-12 text-center text-[#6B7280] text-sm">Failed to load attendance.</td></tr>';
+        }).catch(function (err) {
+            var msg = (err && err.message) || 'Network error';
+            document.getElementById('team-tbody').innerHTML =
+                '<tr><td colspan="6" class="px-6 py-12 text-center text-sm" style="color:#b91c1c">Failed to load attendance: ' + msg + '</td></tr>';
         });
     }
 

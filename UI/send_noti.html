@@ -115,7 +115,7 @@
                     <!-- All employees info line -->
                     <div id="rcp-all-info" class="flex items-center gap-2 px-4 py-3 rounded-xl bg-[#DCFCE7] border border-[#A8CD62]/30">
                         <span class="material-symbols-outlined text-[#166534] text-[20px]">check_circle</span>
-                        <span class="text-sm font-semibold text-[#166534]">This notification will be sent to all 32 employees</span>
+                        <span class="text-sm font-semibold text-[#166534]">Loading employees…</span>
                     </div>
 
                     <!-- Multi-select picker -->
@@ -300,7 +300,11 @@
                 if (info) info.textContent = 'This notification will be sent to all ' + EMPLOYEES.length + ' employees';
                 renderEmpList();
             })
-            .catch(function (err) { console.error('[send_noti] loadEmployees failed:', err); });
+            .catch(function (err) {
+                console.error('[send_noti] loadEmployees failed:', err);
+                var info = document.querySelector('#rcp-all-info span:last-child');
+                if (info) info.textContent = 'Failed to load employees: ' + (err.message || 'network error');
+            });
     }
 
     function renderEmpList() {
