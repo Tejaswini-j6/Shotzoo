@@ -5,7 +5,7 @@ const seedUsers = [
     fullName: 'Arut Selvi',
     email: 'aruts@shotzoo.com',
     password: 'shotzoo@2026',
-    role: 'Admin',
+    role: 'Employee',
     company: 'Shotzoo',
     designation: 'Growth Operations and Community Executive',
     phone: '7550105901',
@@ -24,7 +24,7 @@ const seedUsers = [
     fullName: 'Kishore',
     email: 'kishore@shotzoo.com',
     password: 'kishore@shotzoo',
-    role: 'Employee',
+    role: 'Admin',
     designation: 'Manager',
     phone: '8939055503',
     employeeType: 'Office'
