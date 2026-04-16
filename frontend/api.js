@@ -49,7 +49,7 @@ const api = {
     localStorage.removeItem('shotzoo_token');
     localStorage.removeItem('shotzoo_user');
     localStorage.removeItem('shotzoo_photo_v');
-    globalThis.location.href = '/signin';
+    globalThis.location.href = '/landing_page.html';
   },
 
   // Show a centered confirmation modal before logging out.

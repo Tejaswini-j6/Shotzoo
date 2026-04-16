@@ -20,7 +20,7 @@
         localStorage.removeItem('shotzoo_admin');
         localStorage.removeItem('shotzoo_token');
         localStorage.removeItem('shotzoo_user');
-        globalThis.location.href = '/';
+        globalThis.location.href = '/landing_page.html';
     }
 
     function showLogoutModal() {
@@ -65,9 +65,11 @@
         confirmBtn.addEventListener('mouseleave', function () { confirmBtn.style.filter = 'none'; });
     }
 
-    // Capture-phase so we always intercept before any per-page handler
+    // Capture-phase so we always intercept before any per-page handler.
+    // Matches either the new landing-page href or any anchor whose icon is the
+    // logout material symbol (defense-in-depth in case a page is updated out of band).
     document.addEventListener('click', function (e) {
-        var a = e.target.closest('a[href="/"]');
+        var a = e.target.closest('a[href="/landing_page.html"], a[href="/"]');
         if (!a) return;
         var icon = a.querySelector('.material-symbols-outlined');
         if (icon && icon.textContent.trim() === 'logout') {
